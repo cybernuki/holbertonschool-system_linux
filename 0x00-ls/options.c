@@ -1,11 +1,11 @@
 #include "./headers/options.h"
-
+#include "./headers/error_handler.h"
 
 void close_options(options *options) {
         free(options);
 }
 
-void verify_options(options **options, const char *input_options) {
+int verify_options(options **options, const char *input_options){
 	int i, j, found = 0;
 
 
@@ -31,13 +31,12 @@ void verify_options(options **options, const char *input_options) {
 			}
 		}
 		if (!found) {
-			printf("ls: invalid option -- '%c'\n",
-			       input_options[i]);
-			printf("try 'ls --help' for more information.\n");
-			close_options(*options);
-			exit(127);
+			error_handler(&input_options[i], INVALID_OPTION,
+				      *options, NULL, NULL);
+			return (1);
 		}
 	}
+	return (0);
 }
 
 options *init_options() {

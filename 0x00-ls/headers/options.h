@@ -3,6 +3,8 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#define INVALID_OPTION 5
+
 
 /**
  * options - helps to contains the aliases of the supported flags.
@@ -36,7 +38,8 @@ void close_options(options *options);
  * @options: is the supported options
  * @input_options: It is the input arguments given by the user
  * to use in the command, it must be an null terminated string
+ * Returns: 0 if everything was fine, 1 if an error appears.
  */
-void verify_options(options **options,const char *input_options);
+int verify_options(options **options,const char *input_options);
 
 #endif

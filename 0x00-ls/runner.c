@@ -1,6 +1,6 @@
 #include "./headers/runner.h"
 
-int permissionsclear(char *path) {
+int permissions(char *path) {
 	return (0);
 }
 

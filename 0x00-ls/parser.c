@@ -16,17 +16,24 @@ void close_paths(paths *paths) {
 }
 
 void parser(int size,char *args[], paths **paths, options **options) {
-        int i;
+        int i, error = 0;
 
-	if (!(*paths) || !(*options)) {
+	if (!(*options)) {
 		perror("given struct is NULL\n");
 		return;
 	}
+
+	*paths = open_paths();
+
         for (i = 0; i < size; i++) {
 		/* Strings with the form '-<char>' are options*/
 		if (args[i][0] == '-' && args[i][1]) {
                         /* It verify wheter the option is correct*/
-			verify_options(options, &args[i][1]);
+			error = verify_options(options, &args[i][1]);
+			if (error) {
+				close_paths(*paths);
+				exit(127);
+			}
 		}
 		/* otherwise, deal with it as paths*/
 		else {
