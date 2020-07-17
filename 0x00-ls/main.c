@@ -16,7 +16,7 @@ int main (int argc, char *argv[]) {
 	parser(argc - 1, &argv[1], &paths, &options);
 
 
-//	runner(paths, options);
+	runner(paths, options);
 
 /*	for (i = 0; i < paths->size; i++) {
 		dir = opendir(paths->list[i]);
