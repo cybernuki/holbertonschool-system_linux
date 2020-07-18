@@ -60,8 +60,7 @@ to_print *get_dir(char *path, options *options)
 int runner(paths *paths, options *options) {
 	int result = 0, check = 0;
 	size_t i = 0;
-	struct dirent **files = NULL;
-	to_print *list = NULL;
+	/*to_print *list = NULL;*/
 
 	/* Iterative */
 	for (i = 0; i < paths->size; i++) {
@@ -70,7 +69,7 @@ int runner(paths *paths, options *options) {
 			continue;
 		if (paths->size > 1)
                         printf("%s:\n", paths->list[i]);
-		list = get_dir(paths->list[i], options);
+		get_dir(paths->list[i], options);
 	}
 	/* Recursion */
 	return (result);

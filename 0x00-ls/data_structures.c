@@ -78,7 +78,7 @@ int remove_node(to_print **head, unsigned int index) {
 		actual->next->prev = actual->prev;
 	free(actual);
 	return (1);
-};
+}
 
 void print_list(const to_print *h) {
 	int size = 0;

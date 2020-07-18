@@ -6,10 +6,6 @@
 int main (int argc, char *argv[]) {
 	paths *paths = NULL;
 	options *options = NULL;
-	DIR *dir = NULL;
-	struct dirent *read;
-	size_t i = 0, j= 0;
-	to_print *list = NULL, *node = NULL;
 
 	options = init_options();
 

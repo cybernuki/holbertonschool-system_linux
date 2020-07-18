@@ -22,6 +22,9 @@ void not_access_error(const char *item)
 void error_handler(const char *item, int code, options *options,
 		   paths *paths, to_print *list)
 {
+	(void) paths;
+	(void) list;
+
 	switch (code) {
 	case INVALID_OPTION:
 		invalid_option_error(item[0], options);
