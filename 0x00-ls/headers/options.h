@@ -5,6 +5,14 @@
 #include <stdio.h>
 #define INVALID_OPTION 5
 
+#define INDEX_FLAG_1 0
+#define INDEX_FLAG_l 1
+#define INDEX_FLAG_a 2
+#define INDEX_FLAG_A 3
+#define INDEX_FLAG_r 4
+#define INDEX_FLAG_S 5
+#define INDEX_FLAG_t 6
+#define INDEX_FLAG_R 7
 
 /**
  * options - helps to contains the aliases of the supported flags.
