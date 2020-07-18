@@ -69,9 +69,10 @@ to_print *get_dir(char *path, options *options)
 	index = list;
 	while (index)
 	{
-		printf("%s\n", index->value->d_name);
+		printf("%s ", index->value->d_name);
 		index = index->next;
 	}
+	printf("\n");
 
 	closedir(dir);
 	return (list);
