@@ -1,6 +1,7 @@
 #include "./runner.h"
 #include "./error_handler.h"
 #include "./data_structures.h"
+#include <string.h>
 
 /**
  * check_path - this function check wheter the path is a file
@@ -56,14 +57,19 @@ to_print *get_dir(char *path, options *options)
 	while ((read = readdir(dir)) != NULL)
 	{
 		name = read->d_name;
-		if (!flag_A && !flag_a && name[0] != '.')
-			add_node(&list, read);
-		else if (flag_A && !(name[0] == '.' && !name[1])
-			 && !(name[0] == '.' && name[1] == '.'))
-			add_node(&list, read);
-		else if (flag_a)
-			add_node(&list, read);
-
+		if (name)
+		{
+			if (!flag_A && !flag_a && name[0] != '.')
+				add_node(&list, read);
+			else if (strlen(name) > 1)
+			{
+				if (flag_A && !(name[0] == '.' && !name[1])
+				    && !(name[0] == '.' && name[1] == '.'))
+					add_node(&list, read);
+			}
+			else if (flag_a)
+				add_node(&list, read);
+		}
 	}
 
 	index = list;

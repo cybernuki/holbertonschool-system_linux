@@ -68,7 +68,7 @@ options *init_options()
 {
 	options *new = NULL;
 
-	new = (options *) malloc(sizeof(options));
+	new = (options *) calloc(1, sizeof(options));
 
 	if (!new)
 	{

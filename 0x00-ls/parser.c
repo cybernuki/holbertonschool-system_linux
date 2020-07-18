@@ -8,13 +8,20 @@
 paths *open_paths()
 {
 	paths *new =  NULL;
+	int i = 0;
 
 	new = (paths *) malloc(sizeof(paths));
-	if (!new)
+	if (!new || !new->list)
 	{
 		perror("error allocating paths struct");
 		return (NULL);
 	}
+
+	/* memset */
+	for (i = 0; i < 1024; i++)
+		new->list[i] = NULL;
+	new->size = 0;
+
 	return (new);
 }
 
@@ -24,7 +31,8 @@ paths *open_paths()
  */
 void close_paths(paths *paths)
 {
-	free(paths);
+	if (paths)
+		free(paths);
 }
 
 /**
@@ -47,13 +55,15 @@ void parser(int size, char *args[], paths **paths, options **options)
 {
 	int i, error = 0;
 
-	if (!(*options))
+	if (!(*options) || !paths)
 	{
 		perror("given struct is NULL\n");
 		return;
 	}
 
 	*paths = open_paths();
+	if (!*paths)
+		return;
 
 	for (i = 0; i < size; i++)
 	{
@@ -76,7 +86,6 @@ void parser(int size, char *args[], paths **paths, options **options)
 			(*paths)->size++;
 		}
 	}
-
 	/* when any file args is found, it add the current directory */
 	if (!(*paths)->size)
 	{
