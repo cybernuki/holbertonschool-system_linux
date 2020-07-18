@@ -1,4 +1,4 @@
-#include "./headers/data_structures.h"
+#include "./data_structures.h"
 
 /**
  * add_node - adds a node in a double linked list at the end

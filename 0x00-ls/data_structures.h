@@ -52,6 +52,6 @@ void free_list(to_print *head);
  * @by: the criterio to be sorted, it could be 'S' to sort by size
  * 't' to sort by time or, 'r' to reverse the list
  */
-void sort_list(to_print **head, char by, char order);
+void sort_list(to_print **head, char by);
 
 #endif

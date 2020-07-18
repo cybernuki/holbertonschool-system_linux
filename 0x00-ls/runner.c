@@ -1,6 +1,6 @@
-#include "./headers/runner.h"
-#include "./headers/error_handler.h"
-#include "./headers/data_structures.h"
+#include "./runner.h"
+#include "./error_handler.h"
+#include "./data_structures.h"
 
 /**
  * check_path - this function check wheter the path is a file

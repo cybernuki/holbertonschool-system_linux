@@ -8,23 +8,8 @@
 #include <sys/stat.h>
 #include <errno.h>
 
-/**
- * error_handler - This function prints errors to the stderr based on
- * and supported error code.
- * Right now, it can handle the errors:
- * INVALID_OPTION - see ./options.h
- *
- * @item: the item that provoqued the issue
- * @code: is the code of the error, you can provide yours or use the `errno`
- * @options: options structure, it could be provided or NULL,
- * it is used to be freed
- * @paths: paths structure, it could be provided or NULL,
- * it is used to be freed
- * @list: to_print structure, it could be provided or NULL,
- * it is used to be freed
- */
-void error_handler(const char *item, int code,options *options,
-		   paths *paths, to_print *list);
+
+void error_handler(const char *, int, options *, paths *, to_print *);
 
 
 /**

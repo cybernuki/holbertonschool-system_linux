@@ -15,13 +15,14 @@
 #define INDEX_FLAG_R 7
 
 /**
- * options - helps to contains the aliases of the supported flags.
+ * struct option_struct - helps to contains the aliases of the supported flags.
  * It, also, contains which options to execute.
  * @aliases: it is the string with the chars that represent options
  * @usages: it is a binary array, every postion must correspond
  *          with the position of the alias char.
  */
-typedef struct option_struct {
+typedef struct option_struct
+{
 	char *aliases;
 	short usages[8];
 } options;
@@ -29,13 +30,14 @@ typedef struct option_struct {
 /**
  * init_options - This function initialize a instance of the options struct.
  * if there was an error allocating, it will exit and print the erro.
- * Returns: an allocated options pointer.
+ * Return: an allocated options pointer.
  */
 options *init_options();
 
 
 /**
  * close_options - This functions free the allocated options pointer.
+ * @options: is the initialized options structure
  */
 void close_options(options *options);
 
@@ -46,8 +48,8 @@ void close_options(options *options);
  * @options: is the supported options
  * @input_options: It is the input arguments given by the user
  * to use in the command, it must be an null terminated string
- * Returns: 0 if everything was fine, 1 if an error appears.
+ * Return: 0 if everything was fine, 1 if an error appears.
  */
-int verify_options(options **options,const char *input_options);
+int verify_options(options **options, const char *input_options);
 
 #endif

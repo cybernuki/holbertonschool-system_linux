@@ -23,7 +23,7 @@ int runner(paths *paths, options *options);
 /**
  * check_path - this function check wheter the path is a file
  * or a director. If some error appears due the access, it prints the error
- * @paths: is a path string
+ * @path: is a path string
  * Return: 0 if any error appears, -1 in otherwise.
  */
 int check_path(char *path);

@@ -1,7 +1,7 @@
-#include "./headers/options.h"
-#include "./headers/parser.h"
-#include "./headers/runner.h"
-#include "./headers/data_structures.h"
+#include "./options.h"
+#include "./parser.h"
+#include "./runner.h"
+#include "./data_structures.h"
 
 /**
  * main - main function

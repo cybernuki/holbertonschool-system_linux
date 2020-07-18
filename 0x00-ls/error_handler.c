@@ -1,4 +1,4 @@
-#include "./headers/error_handler.h"
+#include "./error_handler.h"
 
 /**
  * invalid_option_error - This function prints the ls error when a bad
