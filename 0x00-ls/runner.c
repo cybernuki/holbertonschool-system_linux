@@ -102,7 +102,10 @@ int runner(paths *paths, options *options)
 	{
 		check = check_path(paths->list[i]);
 		if (check == -1)
+		{
+			result = check;
 			continue;
+		}
 		if (paths->size > 1)
 			printf("%s:\n", paths->list[i]);
 		list = get_dir(paths->list[i], options);

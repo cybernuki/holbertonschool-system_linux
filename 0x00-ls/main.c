@@ -11,6 +11,7 @@
  */
 int main(int argc, char *argv[])
 {
+	int result = 0;
 	paths *paths = NULL;
 	options *options = NULL;
 
@@ -19,8 +20,11 @@ int main(int argc, char *argv[])
 	parser(argc - 1, &argv[1], &paths, &options);
 
 
-	runner(paths, options);
+	result = runner(paths, options);
 	close_paths(paths);
 	close_options(options);
+
+	if (result == -1)
+		exit(2);
 	exit(0);
 }

@@ -75,7 +75,7 @@ void parser(int size, char *args[], paths **paths, options **options)
 			if (error)
 			{
 				close_paths(*paths);
-				exit(127);
+				exit(2);
 			}
 		}
 		/* otherwise, deal with it as paths*/
