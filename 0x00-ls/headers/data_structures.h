@@ -54,6 +54,4 @@ void free_list(to_print *head);
  */
 void sort_list(to_print **head, char by, char order);
 
-
-void print_list(const to_print *h);
 #endif

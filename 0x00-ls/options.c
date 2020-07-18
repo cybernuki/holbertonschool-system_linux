@@ -1,25 +1,44 @@
 #include "./headers/options.h"
 #include "./headers/error_handler.h"
 
-void close_options(options *options) {
-        free(options);
+/**
+ * close_options - This functions free the allocated options pointer.
+ * @options: is the opened data structure
+ */
+void close_options(options *options)
+{
+	free(options);
 }
 
-int verify_options(options **options, const char *input_options){
+/**
+ * verify_options - It verify if a given options arguments are correct
+ * If one of the chars is not an alias in the options array,
+ * it exit the program with an error message;
+ * @options: is the supported options
+ * @input_options: It is the input arguments given by the user
+ * to use in the command, it must be an null terminated string
+ * Return: 0 if everything was fine, 1 if an error appears.
+ */
+int verify_options(options **options, const char *input_options)
+{
 	int i, j, found = 0;
 
 
-	if (!options || !(*options) || !(*options)->aliases) {
+	if (!options || !(*options) || !(*options)->aliases)
+	{
 		perror("error verifying flags");
-		exit (98);
+		exit(98);
 	}
 
-	for (i = 0; input_options[i]; i++) {
+	for (i = 0; input_options[i]; i++)
+	{
 		found = 0;
-		for (j = 0; (*options)->aliases[j] && !found; j++) {
+		for (j = 0; (*options)->aliases[j] && !found; j++)
+		{
 			if (input_options[i] == (*options)->aliases[j])
 				found = 1;
-			if (found) {
+			if (found)
+			{
 				/* This is very hardcode, modify later*/
 				if ((*options)->aliases[j] == 'S')
 					/*change 't' usage to 0*/
@@ -30,7 +49,8 @@ int verify_options(options **options, const char *input_options){
 				(*options)->usages[j] = 1;
 			}
 		}
-		if (!found) {
+		if (!found)
+		{
 			error_handler(&input_options[i], INVALID_OPTION,
 				      *options, NULL, NULL);
 			return (1);
@@ -39,16 +59,23 @@ int verify_options(options **options, const char *input_options){
 	return (0);
 }
 
-options *init_options() {
-        options *new = NULL;
+/**
+ * init_options - This function initialize a instance of the options struct.
+ * if there was an error allocating, it will exit and print the erro.
+ * Return: an allocated options pointer.
+ */
+options *init_options()
+{
+	options *new = NULL;
 
-        new = (options *) malloc(sizeof(options));
+	new = (options *) malloc(sizeof(options));
 
-        if (!new) {
-                perror("error allocating the options struct");
-                exit(98);
-        }
+	if (!new)
+	{
+		perror("error allocating the options struct");
+		exit(98);
+	}
 
-        new->aliases = "1laArStR\0";
-        return new;
+	new->aliases = "1laArStR\0";
+	return (new);
 }

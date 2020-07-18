@@ -3,7 +3,14 @@
 #include "./headers/runner.h"
 #include "./headers/data_structures.h"
 
-int main (int argc, char *argv[]) {
+/**
+ * main - main function
+ * @argc: size of the argv array
+ * @argv: array with commands
+ * Return: 0 in success, another number in otherwise
+ */
+int main(int argc, char *argv[])
+{
 	paths *paths = NULL;
 	options *options = NULL;
 
@@ -13,20 +20,7 @@ int main (int argc, char *argv[]) {
 
 
 	runner(paths, options);
-
-/*	for (i = 0; i < paths->size; i++) {
-		dir = opendir(paths->list[i]);
-		while ((read = readdir(dir)) != NULL) {
-			add_node(&list,read);
-		}
-		print_list(list);
-		printf("removing index 0\n");
-		remove_node(&list, 11);
-		print_list(list);
-		free_list(list);
-	}
-	close(dir);
-*/	close_paths(paths);
+	close_paths(paths);
 	close_options(options);
-	exit (0);
+	exit(0);
 }
