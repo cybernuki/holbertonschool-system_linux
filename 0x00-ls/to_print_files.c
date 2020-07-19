@@ -1,19 +1,19 @@
-#include "./data_structures.h"
+#include "./to_print_files.h"
 
 /**
- * add_node - adds a node in a double linked list at the end
+ * add_node_files - adds a node in a double linked list at the end
  * @head: head of the list
  * @value: value of the node
  * Return: a pointer to the new node
  */
-to_print *add_node(to_print **head, struct dirent *value)
+to_print_files *add_node_files(to_print_files **head, char *value)
 {
-	to_print *new =  NULL, *index = (*head);
+	to_print_files *new =  NULL, *index = (*head);
 
 	if (!value)
 		return (NULL);
 
-	new = (to_print *) malloc(sizeof(to_print));
+	new = (to_print_files *) malloc(sizeof(to_print_files));
 	if (!new)
 		return (NULL);
 
@@ -22,7 +22,7 @@ to_print *add_node(to_print **head, struct dirent *value)
 	new->next = NULL;
 
 	if (!*head)
-{
+	{
 		*head = new;
 		return (new);
 	}
@@ -37,13 +37,13 @@ to_print *add_node(to_print **head, struct dirent *value)
 }
 
 /**
- * free_list - Free a double linked list
+ * free_list_files - Free a double linked list
  * @head: head of the list
  * Return: nothing
  */
-void free_list(to_print *head)
+void free_list_files(to_print_files *head)
 {
-	to_print *tmp = NULL;
+	to_print_files *tmp = NULL;
 
 	if (head)
 	{
@@ -60,14 +60,14 @@ void free_list(to_print *head)
 }
 
 /**
- * remove_node - removes a node in a given position
+ * remove_node_files - removes a node in a given position
  * @head: head of the list
  * @index: index of the new node
  * Return: 1 if it succeeded, -1 if it failed
  */
-int remove_node(to_print **head, unsigned int index)
+int remove_node_files(to_print_files **head, unsigned int index)
 {
-	to_print *actual;
+	to_print_files *actual;
 	size_t size;
 
 	actual = *head;

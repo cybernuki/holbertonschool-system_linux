@@ -4,12 +4,12 @@
 #include <stdio.h>
 #include "./parser.h"
 #include "./options.h"
-#include "./data_structures.h"
+#include "./to_print_dirs.h"
 #include <sys/stat.h>
 #include <errno.h>
 
 
-void error_handler(const char *, int, options *, paths *, to_print *);
+void error_handler(const char *, int, options *, paths *, to_print_dirs *);
 
 
 /**

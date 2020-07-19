@@ -1,13 +1,13 @@
 #include "./runner.h"
 #include "./error_handler.h"
-#include "./data_structures.h"
-#include <string.h>
+#include "./to_print_dirs.h"
+#include "./to_print_files.h"
 
 /**
  * check_path - this function check wheter the path is a file
  * or a director. If some error appears due the access, it prints the error
  * @path: is a path string
- * Return: 0 if any error appears, -1 in otherwise.
+ * Return: 1 if it is an regular file, 2 if it is a dir, -1 in otherwise.
  */
 int check_path(char *path)
 {
@@ -42,11 +42,11 @@ int check_path(char *path)
  * @options: the options structure with the flags
  * Return: a filled to_print structure with the files to be printed;
  */
-to_print *get_dir(char *path, options *options)
+to_print_dirs *get_dir(char *path, options *options)
 {
 	DIR *dir = NULL;
 	struct dirent *read = NULL;
-	to_print *list = NULL, *index = NULL;
+	to_print_dirs *list = NULL;
 	char *name = NULL;
 	int flag_a = 0, flag_A = 0;
 
@@ -57,33 +57,55 @@ to_print *get_dir(char *path, options *options)
 	while ((read = readdir(dir)) != NULL)
 	{
 		name = read->d_name;
-		if (name)
-		{
-			if (!flag_A && !flag_a && name[0] != '.')
-				add_node(&list, read);
-			else if (strlen(name) > 1)
-			{
-				if (flag_A && !(name[0] == '.' && !name[1])
-				    && !(name[0] == '.' && name[1] == '.'))
-					add_node(&list, read);
-			}
-			else if (flag_a)
-				add_node(&list, read);
-		}
+		if (!flag_A && !flag_a && name[0] != '.')
+			add_node(&list, read, path);
+		else if (flag_A && !(name[0] == '.' && !name[1])
+			 && !(name[0] == '.' && name[1] == '.'))
+			add_node(&list, read, path);
+		else if (flag_a)
+			add_node(&list, read, path);
 	}
-
-	index = list;
-	while (index)
-	{
-		printf("%s ", index->value->d_name);
-		index = index->next;
-	}
-	printf("\n");
-
 	closedir(dir);
 	return (list);
 }
 
+/**
+ * print_ls - prints the files and directories as the ls command
+ * @dirs: is an array with all dirs
+ * @n_dirs: is the size of dirs
+ * @files: is the list with all files
+ */
+void print_ls(to_print_dirs **dirs, size_t n_dirs, to_print_files *files)
+{
+	to_print_dirs *aux = NULL;
+	to_print_files *inx = NULL;
+	size_t i = 0;
+
+	/* print regular files */
+	inx = files;
+	while (inx)
+	{
+		printf("%s ", inx->value);
+		if (!inx->next && n_dirs)
+			printf("\n\n");
+		else if (!inx->next && !n_dirs)
+			printf("\n");
+		inx = inx->next;
+	}
+	/* print directory files */
+	for (i = 0; i < n_dirs; i++)
+	{
+		aux = dirs[i];
+		if (n_dirs >= 2)
+			/*printf("%s:\n", aux->dir_(name);)*/
+		while (aux)
+		{
+			printf("%s ", aux->value->d_name);
+			aux = aux->next;
+		}
+		printf("\n\n");
+	}
+}
 
 /**
  * runner - it execute the process of print each paths
@@ -94,10 +116,13 @@ to_print *get_dir(char *path, options *options)
 int runner(paths *paths, options *options)
 {
 	int result = 0, check = 0;
-	size_t i = 0;
-	to_print *list = NULL;
+	size_t i = 0, n_dirs = 0;
+	to_print_dirs *dirs[1024];
+	to_print_files *files = NULL;
 
-	/* Iterative */
+	for (i = 0; i < 1024; i++)
+		dirs[i] = NULL;
+	/* filtrar */
 	for (i = 0; i < paths->size; i++)
 	{
 		check = check_path(paths->list[i]);
@@ -106,11 +131,18 @@ int runner(paths *paths, options *options)
 			result = check;
 			continue;
 		}
-		if (paths->size > 1)
-			printf("%s:\n", paths->list[i]);
-		list = get_dir(paths->list[i], options);
-		free_list(list);
+		else if (check == 1)
+			add_node_files(&files, paths->list[i]);
+		else
+			dirs[n_dirs++] = get_dir(paths->list[i], options);
 	}
-	/* Recursion */
+	/* sortear*/
+
+	/* imprimir*/
+	print_ls(dirs, n_dirs, files);
+	for (i = 0; i < n_dirs; i++)
+		free_list(dirs[i]);
+
+	free_list_files(files);
 	return (result);
 }

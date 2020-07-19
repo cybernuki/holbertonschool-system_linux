@@ -51,7 +51,7 @@ void not_access_error(const char *item)
  * it is used to be freed
  */
 void error_handler(const char *item, int code, options *options,
-		   paths *paths, to_print *list)
+		   paths *paths, to_print_dirs *list)
 {
 	(void) paths;
 	(void) list;
