@@ -68,7 +68,7 @@ void print_dirs(to_print *dirs, size_t n_dirs, options *options)
 			else if (flag_a)
 				printf("%s ", name);
 		}
-		if (n_dirs == 1)
+		if (n_dirs == 1 || !index->next)
 			printf("\n");
 		else
 			printf("\n\n");
