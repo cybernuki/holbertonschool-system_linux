@@ -145,6 +145,7 @@ int runner(paths *paths, options *options)
 		if (check < 0)
 		{
 			result = check;
+			n_dirs++;
 			continue;
 		}
 		else if (check == 1)
