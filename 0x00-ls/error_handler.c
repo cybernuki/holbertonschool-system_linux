@@ -20,7 +20,7 @@ void invalid_option_error(const char item, options *options)
  */
 void not_permissions_error(const char *item)
 {
-	fprintf(stderr, "hls: cannot open directory %s: Permission denied\n",
+	fprintf(stderr, "hls: cannot access %s: Permission denied\n",
 		item);
 }
 
