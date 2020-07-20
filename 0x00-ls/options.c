@@ -66,9 +66,10 @@ int verify_options(options **options, const char *input_options)
  */
 options *init_options()
 {
+	int i = 0;
 	options *new = NULL;
 
-	new = (options *) calloc(1, sizeof(options));
+	new = (options *) malloc(sizeof(options));
 
 	if (!new)
 	{
@@ -77,5 +78,7 @@ options *init_options()
 	}
 
 	new->aliases = "1laArStR\0";
+	for (i = 0; i < NUMBER_FLAGS; i++)
+		new->usages[i] = 0;
 	return (new);
 }

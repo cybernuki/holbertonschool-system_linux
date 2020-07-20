@@ -5,6 +5,7 @@
 #include <stdio.h>
 #define INVALID_OPTION 5
 
+#define NUMBER_FLAGS 8
 #define INDEX_FLAG_1 0
 #define INDEX_FLAG_l 1
 #define INDEX_FLAG_a 2

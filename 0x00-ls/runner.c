@@ -97,13 +97,16 @@ void print_ls(to_print_dirs **dirs, size_t n_dirs, to_print_files *files)
 	{
 		aux = dirs[i];
 		if (n_dirs >= 2)
-			/*printf("%s:\n", aux->dir_(name);)*/
+			printf("%s:\n", aux->dir_name);
 		while (aux)
 		{
 			printf("%s ", aux->value->d_name);
 			aux = aux->next;
 		}
-		printf("\n\n");
+		if (n_dirs == 1)
+			printf("\n");
+		else
+			printf("\n\n");
 	}
 }
 
