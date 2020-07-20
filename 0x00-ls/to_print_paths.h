@@ -1,5 +1,5 @@
-#ifndef TO_PRINT_FILES_H
-#define TO_PRINT_FILES_H
+#ifndef TO_PRINT_PATHS_H
+#define TO_PRINT_PATHS_H
 
 #include <stdlib.h>
 #include <sys/types.h>
@@ -20,38 +20,38 @@ typedef struct dlistint
 	char *value;
 	struct dlistint *prev;
 	struct dlistint *next;
-} to_print_files;
+} to_print;
 
 
 /**
- * add_node_files - adds a node in a double linked list at the end
+ * add_node - adds a node in a double linked list at the end
  * @head: head of the list
  * @value: value of the node
  * Return: a pointer to the new node
  */
-to_print_files *add_node_files(to_print_files **head, char *value);
+to_print *add_node(to_print **head, char *value);
 
 /**
- * remove_node_files - removes a node in a given position
+ * remove_node - removes a node in a given position
  * @head: head of the list
  * @index: index of the new node
  * Return: 1 if it succeeded, -1 if it failed
  */
-int remove_node_files(to_print_files **head, unsigned int index);
+int remove_node(to_print **head, unsigned int index);
 
 /**
- * free_list_files - Free a double linked list
+ * free_list - Free a double linked list
  * @head: head of the list
  * Return: nothing
  */
-void free_list_files(to_print_files *head);
+void free_list(to_print *head);
 
 /**
- * sort_list_files - sort the linked list in place
+ * sort_list - sort the linked list in place
  * @head: is the head of the list
  * @by: the criterio to be sorted, it could be 'S' to sort by size
  * 't' to sort by time or, 'r' to reverse the list
  */
-void sort_list_files(to_print_files **head, char by);
+void sort_list(to_print **head, char by);
 
 #endif
