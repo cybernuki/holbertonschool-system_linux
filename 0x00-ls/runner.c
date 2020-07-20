@@ -33,39 +33,62 @@ int check_path(char *path)
 }
 
 /**
+ * content_filter - evaluates if a file into a dir must be
+ * printed based on the -a and -A options
+ * @read: is the file
+ * @options: are the set options
+ * Return: 1 if it must be printed, 0 in otherwise
+ */
+int content_filter(struct dirent *read, options *options)
+{
+	int print = 0;
+
+	flag_a = options->usages[INDEX_FLAG_a];
+	flag_A = options->usages[INDEX_FLAG_A];
+	if (!flag_A && !flag_a && name[0] != '.')
+		print = 1;
+	else if (flag_A && !(name[0] == '.' && !name[1])
+		 && !(name[0] == '.' && name[1] == '.'))
+		print = 1;
+	else if (flag_a)
+		print = 1;
+
+	return (print);
+}
+
+/**
  * print_dirs - This function opens each dir in the dirs lists and prints their
  * content.
  * @dirs: is the given dirs paths list
  * @n_dirs: is the number of directories in the list
  * @options: the options structure with the flags
+ * Return: 0 if there wasn't an error, -1 in otherwise
  */
-void print_dirs(to_print *dirs, size_t n_dirs, options *options)
+int print_dirs(to_print *dirs, size_t n_dirs, options *options)
 {
+	int result = 0;
 	DIR *dir = NULL;
 	struct dirent *read = NULL;
 	to_print *index = NULL;
 	char *name = NULL;
-/* This coudl be in the filter */
-	int flag_a = 0, flag_A = 0;
 
-	flag_a = options->usages[INDEX_FLAG_a];
-	flag_A = options->usages[INDEX_FLAG_A];
 	index = dirs;
 	while (index)
 	{
 		dir = opendir(index->value);
+		if (!dir)
+		{
+			error_handler(index->value, D_EACCES, NULL, NULL, NULL);
+			index = index->next;
+			result = -1;
+			continue;
+		}
 		if (n_dirs >= 2)
 			printf("%s:\n", index->value);
 		while ((read = readdir(dir)) != NULL)
 		{
 			name = read->d_name;
-			/*Filter, create a function apart*/
-			if (!flag_A && !flag_a && name[0] != '.')
-				printf("%s ", name);
-			else if (flag_A && !(name[0] == '.' && !name[1])
-				 && !(name[0] == '.' && name[1] == '.'))
-				printf("%s ", name);
-			else if (flag_a)
+			if (content_filter(read, options))
 				printf("%s ", name);
 		}
 		if (n_dirs == 1 || !index->next)
@@ -75,7 +98,9 @@ void print_dirs(to_print *dirs, size_t n_dirs, options *options)
 		closedir(dir);
 		index = index->next;
 	}
+	return (result);
 }
+
 
 /**
  * print_files - prints all files in the files list
@@ -107,7 +132,7 @@ void print_files(to_print *files, size_t n_dirs)
  */
 int runner(paths *paths, options *options)
 {
-	int result = 0, check = 0;
+	int result = 0, dirs_error = 0, check = 0;
 	size_t i = 0, n_dirs = 0;
 	to_print *dirs = NULL;
 	to_print *files = NULL;
@@ -116,7 +141,7 @@ int runner(paths *paths, options *options)
 	for (i = 0; i < paths->size; i++)
 	{
 		check = check_path(paths->list[i]);
-		if (check == -1)
+		if (check < 0)
 		{
 			result = check;
 			continue;
@@ -133,9 +158,10 @@ int runner(paths *paths, options *options)
 
 	/* imprimir*/
 	print_files(files, n_dirs);
-	print_dirs(dirs, n_dirs, options);
+	dirs_error = print_dirs(dirs, n_dirs, options);
 
 	free_list(dirs);
 	free_list(files);
+	result = (result == -1 || dirs_error == -1) ? -1 : 0;
 	return (result);
 }

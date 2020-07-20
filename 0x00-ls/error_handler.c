@@ -34,6 +34,16 @@ void not_access_error(const char *item)
 	fprintf(stderr, "hls: cannot access %s: No such file or directory\n",
 		item);
 }
+/**
+ * not_allow_to_open - this functions prints the ls error when try to open
+ * with no permissions a directory
+ * @item: is the path
+ */
+void not_allow_to_open(const char *item)
+{
+	fprintf(stderr, "hls: cannot open directory %s: Permission denied\n",
+		item);
+}
 
 /**
  * error_handler - This function prints errors to the stderr based on
@@ -67,5 +77,7 @@ void error_handler(const char *item, int code, options *options,
 	case ENOENT:
 		not_access_error(item);
 		break;
+	case D_EACCES:
+		not_allow_to_open(item);
 	}
 }

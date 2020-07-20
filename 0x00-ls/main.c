@@ -24,6 +24,6 @@ int main(int argc, char *argv[])
 	close_options(options);
 
 	if (result == -1)
-		exit(2);
-	exit(0);
+		return (2);
+	return (0);
 }

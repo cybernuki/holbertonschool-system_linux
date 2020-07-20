@@ -9,6 +9,8 @@
 #include <errno.h>
 
 
+#define D_EACCES (EACCES + 1)
+
 void error_handler(const char *, int, options *, paths *, to_print *);
 
 
