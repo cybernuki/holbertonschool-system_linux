@@ -35,13 +35,14 @@ int check_path(char *path)
 /**
  * content_filter - evaluates if a file into a dir must be
  * printed based on the -a and -A options
- * @read: is the file
+ * @name: is the name of the file
  * @options: are the set options
  * Return: 1 if it must be printed, 0 in otherwise
  */
-int content_filter(struct dirent *read, options *options)
+int content_filter(char *name, options *options)
 {
 	int print = 0;
+	int flag_a = 0, flag_A = 0;
 
 	flag_a = options->usages[INDEX_FLAG_a];
 	flag_A = options->usages[INDEX_FLAG_A];
@@ -88,7 +89,7 @@ int print_dirs(to_print *dirs, size_t n_dirs, options *options)
 		while ((read = readdir(dir)) != NULL)
 		{
 			name = read->d_name;
-			if (content_filter(read, options))
+			if (content_filter(name, options))
 				printf("%s ", name);
 		}
 		if (n_dirs == 1 || !index->next)
