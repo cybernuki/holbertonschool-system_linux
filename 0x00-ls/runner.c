@@ -49,7 +49,7 @@ int content_filter(char *name, options *options)
 	if (!flag_A && !flag_a && name[0] != '.')
 		print = 1;
 	else if (flag_A && !(name[0] == '.' && !name[1])
-		 && !(name[0] == '.' && name[1] == '.'))
+		 && !(name[0] == '.' && name[1] == '.' && !name[2]))
 		print = 1;
 	else if (flag_a)
 		print = 1;
