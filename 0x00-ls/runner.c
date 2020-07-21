@@ -63,9 +63,10 @@ int content_filter(char *name, options *options)
  * @dirs: is the given dirs paths list
  * @n_dirs: is the number of directories in the list
  * @options: the options structure with the flags
+ * @n_files: is the numer of files given by the user
  * Return: 0 if there wasn't an error, -1 in otherwise
  */
-int print_dirs(to_print *dirs, size_t n_dirs, options *options)
+int print_dirs(to_print *dirs, size_t n_dirs, size_t n_files, options *options)
 {
 	int result = 0, flag_1 = 0;
 	DIR *dir = NULL;
@@ -85,7 +86,7 @@ int print_dirs(to_print *dirs, size_t n_dirs, options *options)
 			result = -1;
 			continue;
 		}
-		if (n_dirs >= 2)
+		if (n_dirs >= 2 || n_files > 0)
 			printf("%s:\n", index->value);
 		while ((read = readdir(dir)) != NULL)
 		{
@@ -93,8 +94,6 @@ int print_dirs(to_print *dirs, size_t n_dirs, options *options)
 			if (content_filter(name, options))
 			{
 				printf("%s ", name);
-				if (flag_1)
-					printf("\n");
 			}
 		}
 		if (n_dirs == 1 || !index->next)
@@ -142,7 +141,7 @@ void print_files(to_print *files, size_t n_dirs)
 int runner(paths *paths, options *options)
 {
 	int result = 0, dirs_error = 0, check = 0;
-	size_t i = 0, n_dirs = 0;
+	size_t i = 0, n_dirs = 0, n_files = 0;
 	to_print *dirs = NULL;
 	to_print *files = NULL;
 
@@ -153,11 +152,13 @@ int runner(paths *paths, options *options)
 		if (check < 0)
 		{
 			result = check;
-			n_dirs++;
 			continue;
 		}
 		else if (check == 1)
+		{
 			add_node(&files, paths->list[i]);
+			n_files++;
+		}
 		else
 		{
 			add_node(&dirs, paths->list[i]);
@@ -168,7 +169,7 @@ int runner(paths *paths, options *options)
 
 	/* imprimir*/
 	print_files(files, n_dirs);
-	dirs_error = print_dirs(dirs, n_dirs, options);
+	dirs_error = print_dirs(dirs, n_dirs, n_files, options);
 
 	free_list(dirs);
 	free_list(files);
