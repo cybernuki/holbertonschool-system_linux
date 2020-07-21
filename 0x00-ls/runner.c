@@ -68,12 +68,13 @@ int content_filter(char *name, options *options)
  */
 int print_dirs(to_print *dirs, size_t n_dirs, size_t n_files, options *options)
 {
-	int result = 0, prints = 0;
+	int result = 0, prints = 0, flag_1 = 0;
 	DIR *dir = NULL;
 	struct dirent *read = NULL;
 	to_print *index = NULL;
 	char *name = NULL;
 
+	flag_1 = options->usages[INDEX_FLAG_1];
 	index = dirs;
 	while (index)
 	{
@@ -88,17 +89,18 @@ int print_dirs(to_print *dirs, size_t n_dirs, size_t n_files, options *options)
 		}
 		if (n_dirs >= 2 || n_files > 0)
 			printf("%s:\n", index->value);
-
 		while ((read = readdir(dir)))
 		{
 			name = read->d_name;
 			if (content_filter(name, options))
 			{
 				printf("%s ", name);
+				if (flag_1)
+					printf("\n");
 				prints++;
 			}
 		}
-		if (prints)
+		if (prints && !flag_1)
 			printf("\n");
 		if (index->next)
 			printf("\n");
