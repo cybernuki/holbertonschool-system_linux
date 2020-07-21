@@ -68,16 +68,16 @@ int content_filter(char *name, options *options)
  */
 int print_dirs(to_print *dirs, size_t n_dirs, size_t n_files, options *options)
 {
-	int result = 0, flag_1 = 0;
+	int result = 0, prints = 0;
 	DIR *dir = NULL;
 	struct dirent *read = NULL;
 	to_print *index = NULL;
 	char *name = NULL;
 
-	flag_1 = options->usages[INDEX_FLAG_1];
 	index = dirs;
 	while (index)
 	{
+		prints = 0;
 		dir = opendir(index->value);
 		if (!dir)
 		{
@@ -88,21 +88,20 @@ int print_dirs(to_print *dirs, size_t n_dirs, size_t n_files, options *options)
 		}
 		if (n_dirs >= 2 || n_files > 0)
 			printf("%s:\n", index->value);
-		while ((read = readdir(dir)) != NULL)
+
+		while ((read = readdir(dir)))
 		{
 			name = read->d_name;
 			if (content_filter(name, options))
 			{
 				printf("%s ", name);
+				prints++;
 			}
 		}
-		if (n_dirs == 1 || !index->next)
-		{
-			if (!flag_1)
-				printf("\n");
-		}
-		else
-			printf("\n\n");
+		if (prints)
+			printf("\n");
+		if (index->next)
+			printf("\n");
 		closedir(dir);
 		index = index->next;
 	}
@@ -170,7 +169,6 @@ int runner(paths *paths, options *options)
 	/* imprimir*/
 	print_files(files, n_dirs);
 	dirs_error = print_dirs(dirs, n_dirs, n_files, options);
-
 	free_list(dirs);
 	free_list(files);
 	result = (result == -1 || dirs_error == -1) ? -1 : 0;
