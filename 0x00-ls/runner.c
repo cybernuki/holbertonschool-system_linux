@@ -48,8 +48,8 @@ int content_filter(char *name, options *options)
 	flag_A = options->usages[INDEX_FLAG_A];
 	if (!flag_A && !flag_a && name[0] != '.')
 		print = 1;
-	else if (flag_A && !(name[0] == '.' && !name[1])
-		 && !(name[0] == '.' && name[1] == '.' && !name[2]))
+	else if (flag_A && !(name[0] == '.' && !name[1]) &&
+		 !(name[0] == '.' && name[1] == '.' && !name[2]))
 		print = 1;
 	else if (flag_a)
 		print = 1;
@@ -71,11 +71,10 @@ int print_dirs(to_print *dirs, size_t n_dirs, size_t n_files, options *options)
 	int result = 0, prints = 0, flag_1 = 0;
 	DIR *dir = NULL;
 	struct dirent *read = NULL;
-	to_print *index = NULL;
+	to_print *index = dirs;
 	char *name = NULL;
 
 	flag_1 = options->usages[INDEX_FLAG_1];
-	index = dirs;
 	while (index)
 	{
 		prints = 0;
@@ -94,9 +93,10 @@ int print_dirs(to_print *dirs, size_t n_dirs, size_t n_files, options *options)
 			name = read->d_name;
 			if (content_filter(name, options))
 			{
-				printf("%s ", name);
 				if (flag_1)
-					printf("\n");
+					printf("%s\n", name);
+				else
+					printf("%s ", name);
 				prints++;
 			}
 		}
@@ -109,7 +109,6 @@ int print_dirs(to_print *dirs, size_t n_dirs, size_t n_files, options *options)
 	}
 	return (result);
 }
-
 
 /**
  * print_files - prints all files in the files list
