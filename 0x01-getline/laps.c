@@ -1,5 +1,10 @@
 #include "./laps.h"
 
+/**
+ * hash_table_create - initialize and hash table
+ * @size: the size of the new table
+ * Return: a new table or null if somenthing went wrong
+ */
 hash_table_t *hash_table_create(unsigned long int size)
 {
 	unsigned long int i = 0;
@@ -23,6 +28,13 @@ hash_table_t *hash_table_create(unsigned long int size)
 	return (table);
 }
 
+/**
+ * key_index - Returns the index at which the key/value pair should be stored
+ * in the array of the hash table
+ * @key: is the string key
+ * @size: is the size of the table
+ * Return: The key index
+ */
 unsigned long int key_index(int key, unsigned long int size)
 {
 	unsigned long int hash;
@@ -34,6 +46,12 @@ unsigned long int key_index(int key, unsigned long int size)
 	return (hash % size);
 }
 
+/**
+ * hash_table_set - adds an element to the hash table
+ * @ht: is the hash table
+ * @key: is the key to be added
+ * Return: 1 if it succeeded, 0 otherwise
+ */
 int hash_table_set(hash_table_t *ht, int key)
 {
 	hash_node_t *new_node = NULL, *node = NULL;
@@ -64,6 +82,11 @@ int hash_table_set(hash_table_t *ht, int key)
 	return (1);
 }
 
+/**
+ * hash_table_delete - deletes a hash table
+ * @ht: is the hash table
+ * Return: nothing
+ */
 void hash_table_delete(hash_table_t *ht)
 {
 	hash_node_t *node = NULL, *next = NULL;
@@ -86,6 +109,12 @@ void hash_table_delete(hash_table_t *ht)
 	}
 }
 
+/**
+ * race_state - This function keeps track of the number of the laps
+ * made by several cars in a race
+ * @id: isan array of int representing the "identifier" of each car
+ * @size: is the size of this array
+ */
 void race_state(int *id, size_t size)
 {
 	static int started;
