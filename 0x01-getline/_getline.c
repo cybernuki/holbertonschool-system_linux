@@ -167,6 +167,7 @@ char *_getline(const int fd)
 	if (fd == -1)
 	{
 		close_struct(files);
+		files = NULL;
 		return (NULL);
 	}
 	current = add_node(fd, &files);
