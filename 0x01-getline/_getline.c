@@ -38,23 +38,19 @@ lines *parser(int fd)
 	{
 		for (i = 0, s = 0; i < readed; i++)
 		{
-			if (buf[i] == '\n')
-			{
-				tmp = malloc(sizeof(char) * 1024);
-				memset(tmp, 0, 1024);
-				tmp = strncpy(tmp, &buf[s], (i - s));
-				strcat(current->content, tmp);
-				s = i + 1;
-				current->next = add_line_node();
-				current = current->next;
-				free(tmp);
-			}
-			else if (i == (readed - 1) && buf[i] != '\n')
+			if (buf[i] == '\n' || !buf[i] ||
+				(i == (readed - 1) && buf[i] != '\n'))
 			{
 				tmp = malloc(sizeof(char) * 1024);
 				memset(tmp, 0, 1024);
 				tmp = strncpy(tmp, &buf[s], (i - s + 1));
 				strcat(current->content, tmp);
+				s = i + 1;
+				if (buf[i] == '\n' && !(i == (readed - 1)))
+				{
+					current->next = add_line_node();
+					current = current->next;
+				}
 				free(tmp);
 			}
 		}
@@ -176,11 +172,11 @@ char *_getline(const int fd)
 
 	if (!content)
 		return (NULL);
-	for (size = 0; content[size]; size++)
+	for (size = 0; content[size] && content[size] != '\n'; size++)
 		;
 	buff = (char *)malloc(size + 1);
 	memset(buff, 0, size + 1);
-	strncpy(buff, content, size + 1);
+	strncpy(buff, content, size);
 	free(content);
 	return (buff);
 }
