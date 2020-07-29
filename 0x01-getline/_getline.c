@@ -147,7 +147,7 @@ char *get_line(fd_list *node, int *size)
 	if (!line)
 		return (NULL);
 	content = line->content;
-	*size = line->size;
+	*size = line->size - 1;
 	node->lines = node->lines->next;
 	free(line);
 	return (content);
