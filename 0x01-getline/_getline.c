@@ -45,9 +45,9 @@ lines *parser(int fd)
 				tmp = malloc(sizeof(char) * 1024);
 				memset(tmp, 0, 1024);
 				tmp = strncpy(tmp, &buf[s], (i - s + 1));
-				index = (!current->size) ? 0 : current->size + 1;
+				index = (!current->size) ? 0 : current->size;
 				strcat(&(current->content[index]), tmp);
-				current->size += i - s;
+				current->size += i - s + 1;
 				s = i + 1;
 				if (buf[i] == '\n' && !(i == (readed - 1)))
 				{
