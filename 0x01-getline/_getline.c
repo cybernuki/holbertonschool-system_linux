@@ -33,8 +33,13 @@ lines *parser(int fd)
 
 	head = add_line_node();
 	current = head;
-
 	readed = read(fd, buf, READ_SIZE);
+	if (!readed)
+	{
+		free(current->content);
+		free(current);
+		return (NULL);
+	}
 	while (readed)
 	{
 		for (i = 0, s = 0; i < readed; i++)
