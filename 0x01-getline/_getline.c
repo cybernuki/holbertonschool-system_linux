@@ -162,7 +162,8 @@ char *_getline(const int fd)
 {
 	static fd_list *files;
 	fd_list *current = NULL;
-	char *content = NULL;
+	char *content = NULL, *buff = NULL;
+	int size = 0;
 
 	if (fd == -1)
 	{
@@ -172,5 +173,14 @@ char *_getline(const int fd)
 	}
 	current = add_node(fd, &files);
 	content = get_line(current);
-	return (content);
+
+	if (!content)
+		return (NULL);
+	for (size = 0; content[size]; size++)
+		;
+	buff = (char *)malloc(size + 1);
+	memset(buff, 0, size + 1);
+	strncpy(buff, content, size + 1);
+	free(content);
+	return (buff);
 }
