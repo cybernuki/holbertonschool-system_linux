@@ -134,6 +134,7 @@ fd_list *add_node(const int fd, fd_list **head)
 /**
  * get_line - It takes the first line on the list of files
  * @node: is the node that have the line
+ * @size: is the size of the string
  * Return: the content of the line struct
  */
 char *get_line(fd_list *node, int *size)
