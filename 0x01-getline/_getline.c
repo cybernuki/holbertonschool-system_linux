@@ -136,7 +136,7 @@ fd_list *add_node(const int fd, fd_list **head)
  * @node: is the node that have the line
  * Return: the content of the line struct
  */
-char *get_line(fd_list *node)
+char *get_line(fd_list *node, int *size)
 {
 	lines *line = NULL;
 	char *content = NULL;
@@ -147,6 +147,7 @@ char *get_line(fd_list *node)
 	if (!line)
 		return (NULL);
 	content = line->content;
+	*size = line->size;
 	node->lines = node->lines->next;
 	free(line);
 	return (content);
@@ -171,12 +172,10 @@ char *_getline(const int fd)
 		return (NULL);
 	}
 	current = add_node(fd, &files);
-	content = get_line(current);
+	content = get_line(current, &size);
 
 	if (!content)
 		return (NULL);
-	for (size = 0; content[size] != '\n'; size++)
-		;
 	buff = (char *)malloc(size + 1);
 	memset(buff, 0, size + 1);
 	/*memcpy(buff, content, size);*/
