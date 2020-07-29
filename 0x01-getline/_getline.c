@@ -47,7 +47,7 @@ lines *parser(int fd)
 				tmp = strncpy(tmp, &buf[s], (i - s + 1));
 				index = (!current->size) ? 0 : current->size;
 				strcat(&(current->content[index]), tmp);
-				current->size += i - s + 1;
+				current->size += current->size + i - s + 1;
 				s = i + 1;
 				if (buf[i] == '\n' && !(i == (readed - 1)))
 				{
@@ -181,7 +181,9 @@ char *_getline(const int fd)
 	memset(buff, 0, size + 1);
 	/*memcpy(buff, content, size);*/
 	for (i = 0; i < size; i++)
+	{
 		buff[i] = content[i];
+	}
 	free(content);
 	return (buff);
 }
