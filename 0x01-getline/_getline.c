@@ -13,7 +13,7 @@ lines *add_line_node()
 	new->next = NULL;
 	new->content = malloc(sizeof(char) * 1024);
 	memset(new->content, 0, READ_SIZE);
-
+	new->size = 0;
 	return (new);
 }
 
@@ -29,6 +29,7 @@ lines *parser(int fd)
 	lines *head = NULL, *current = NULL;
 	char *tmp, buf[READ_SIZE];
 	size_t i = 0, s = 0, readed = 0;
+	int index = 0;
 
 	head = add_line_node();
 	current = head;
@@ -44,7 +45,9 @@ lines *parser(int fd)
 				tmp = malloc(sizeof(char) * 1024);
 				memset(tmp, 0, 1024);
 				tmp = strncpy(tmp, &buf[s], (i - s + 1));
-				strcat(current->content, tmp);
+				index = (!current->size) ? 0 : current->size + 1;
+				strcat(&(current->content[index]), tmp);
+				current->size += i - s;
 				s = i + 1;
 				if (buf[i] == '\n' && !(i == (readed - 1)))
 				{
@@ -159,7 +162,7 @@ char *_getline(const int fd)
 	static fd_list *files;
 	fd_list *current = NULL;
 	char *content = NULL, *buff = NULL;
-	int size = 0;
+	int size = 0, i = 0;
 
 	if (fd == -1)
 	{
@@ -172,11 +175,13 @@ char *_getline(const int fd)
 
 	if (!content)
 		return (NULL);
-	for (size = 0; content[size] && content[size] != '\n'; size++)
+	for (size = 0; content[size] != '\n'; size++)
 		;
 	buff = (char *)malloc(size + 1);
 	memset(buff, 0, size + 1);
-	strncpy(buff, content, size);
+	/*memcpy(buff, content, size);*/
+	for (i = 0; i < size; i++)
+		buff[i] = content[i];
 	free(content);
 	return (buff);
 }

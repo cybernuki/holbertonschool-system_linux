@@ -14,13 +14,14 @@
  * each line of the file
  * @content: the content of the line
  * @next: points to the next node
- *
+ * @size: size of the content
  * Description: singly linked list node structure
  */
 typedef struct _lines_struct
 {
 	char *content;
 	struct _lines_struct *next;
+	int size;
 } lines;
 
 /**
