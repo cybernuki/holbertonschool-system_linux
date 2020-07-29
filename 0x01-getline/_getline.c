@@ -34,7 +34,7 @@ lines *parser(int fd)
 	head = add_line_node();
 	current = head;
 	readed = read(fd, buf, READ_SIZE);
-	if (!readed)
+	if (readed <= 0)
 	{
 		free(current->content);
 		free(current);
