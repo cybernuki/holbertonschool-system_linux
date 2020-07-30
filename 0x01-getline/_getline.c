@@ -28,7 +28,7 @@ lines *parser(int fd)
 {
 	lines *head = NULL, *current = NULL;
 	char *tmp, buf[READ_SIZE];
-	size_t i = 0, s = 0, readed = 0;
+	int i = 0, s = 0, readed = 0;
 	int index = 0;
 
 	head = add_line_node();
