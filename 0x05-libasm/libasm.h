@@ -1,8 +1,6 @@
-#ifndef LIBASM_H
-#define LIBASM_H
+#ifndef ASM_H
+#define ASM_H
 
-#include <stdlib.h>
+int asm_strlen(char *a);
 
-size_t asm_strlen(const char *str);
-
-#endif // !LIBASM_H
+#endif
