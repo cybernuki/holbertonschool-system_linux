@@ -17,6 +17,8 @@ int handle_sigaction(void)
 {
 	struct sigaction handler;
 
-	handler.sa_handler = &signal_handler;
+	sigemptyset(&handler.sa_mask);
+	handler.sa_handler = &signal_handler
+
 	return (sigaction(SIGINT, &handler, NULL));
 }
