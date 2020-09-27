@@ -18,8 +18,9 @@ void signal_handler(int signal)
  */
 int main(void)
 {
-	struct sigaction handler = {0};
+	struct sigaction handler;
 
+	memset(&handler, 0, sizeof(handler));
 	handler.sa_handler = &signal_handler;
 	sigaction(SIGINT, &handler, NULL);
 
