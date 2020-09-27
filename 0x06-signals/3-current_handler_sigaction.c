@@ -6,8 +6,9 @@
  */
 void (*current_handler_sigaction(void))(int)
 {
-	struct sigaction current = {0};
+	struct sigaction current;
 
+	memset(&current, 0, sizeof(current));
 	sigaction(SIGINT, NULL, &current);
 	return (current.sa_handler);
 }
