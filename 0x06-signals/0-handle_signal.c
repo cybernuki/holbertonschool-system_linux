@@ -15,6 +15,5 @@ void handler(int signal)
  */
 int handle_signal(void)
 {
-	signal(SIGINT, handler);
-	return (errno == EINVAL ? -1 : 0);
+	return (signal(SIGINT, handler) == SIG_ERR ? -1 : 0);
 }
