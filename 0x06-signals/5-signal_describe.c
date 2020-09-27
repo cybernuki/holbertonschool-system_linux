@@ -10,16 +10,16 @@
  */
 int main(int argc, char *argv[])
 {
-    char *description = NULL;
+	char *description = NULL;
 
-    if (argc < 2)
-    {
-        printf("Usage: %s <signum>\n", argv[0]);
-        exit(EXIT_FAILURE);
-    }
+	if (argc < 2)
+	{
+		printf("Usage: %s <signum>\n", argv[0]);
+		exit(EXIT_FAILURE);
+	}
 
-    description = strsignal(atoi(argv[1]));
+	description = strsignal(atoi(argv[1]));
 
-    printf("%s: %s\n", argv[1], description);
-    return (0);
+	printf("%s: %s\n", argv[1], description);
+	return (0);
 }
