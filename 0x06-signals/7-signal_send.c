@@ -10,7 +10,7 @@
  */
 int main(int argc, char const *argv[])
 {
-	if (argc < 2)
+	if (argc != 2)
 	{
 		printf("Usage: %s <pid>", argv[0]);
 		exit(EXIT_FAILURE);
