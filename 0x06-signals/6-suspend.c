@@ -2,6 +2,7 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 /**
  * signal_handler - handles for a given signal
@@ -10,6 +11,7 @@
 void signal_handler(int signal)
 {
 	printf("Caught %d\n", signal);
+	fflush(stdout);
 }
 
 /**
