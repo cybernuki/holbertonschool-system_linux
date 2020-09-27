@@ -15,7 +15,7 @@ void signal_handler(int signal)
  */
 int handle_sigaction(void)
 {
-	struct sigaction handler = {0};
+	struct sigaction handler;
 
 	handler.sa_handler = &signal_handler;
 	return (sigaction(SIGINT, &handler, NULL));
