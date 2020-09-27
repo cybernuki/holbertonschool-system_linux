@@ -7,6 +7,7 @@
 void signal_handler(int signal)
 {
 	printf("Gotcha! [%d]\n", signal);
+	fflush(stdout);
 }
 
 /**
@@ -17,7 +18,7 @@ int handle_sigaction(void)
 {
 	struct sigaction handler;
 
-	sigemptyset(&handler.sa_mask);
+	memset(&handler, 0, sizeof(handler));
 	handler.sa_handler = &signal_handler;
 
 	return (sigaction(SIGINT, &handler, NULL));
