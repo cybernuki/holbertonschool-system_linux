@@ -12,7 +12,7 @@ int main(int argc, char const *argv[])
 {
 	if (argc != 2)
 	{
-		printf("Usage: %s <pid>", argv[0]);
+		printf("Usage: %s <pid>\n", argv[0]);
 		exit(EXIT_FAILURE);
 	}
 	return (!kill(atoi(argv[1]), SIGINT) ? EXIT_SUCCESS : EXIT_FAILURE);
