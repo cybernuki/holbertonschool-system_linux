@@ -19,8 +19,9 @@ void action(int signal, siginfo_t *info, void *context)
  */
 int trace_signal_sender(void)
 {
-	struct sigaction act = {0};
+	struct sigaction act;
 
+	memset(&act, 0, sizeof(act));
 	act.sa_sigaction = action;
 	act.sa_flags = SA_SIGINFO;
 
