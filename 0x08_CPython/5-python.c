@@ -9,7 +9,7 @@
 void print_python_int(PyObject *p)
 {
 	unsigned long number = 0;
-	ssize_t i = 0, size = 0, negative = 0;
+	ssize_t i = 0, size = 0;
 	int shift = 0;
 
 	if (!PyLong_Check(p))
@@ -32,7 +32,7 @@ void print_python_int(PyObject *p)
 			((unsigned long)((PyLongObject *)p)->ob_digit[i]) * (1UL << (shift));
 		number += sub;
 	}
-	if (negative)
+	if (size < 0)
 		printf("-");
 	printf("%lu\n", number);
 }
