@@ -9,7 +9,6 @@
 void print_python_bytes(PyObject *p)
 {
 	Py_ssize_t i = 0, size = (((PyVarObject *)(p))->ob_size);
-	PyBytesObject *byteObject = (PyBytesObject *)p;
 
 	printf("[.] bytes object info\n");
 	if (p->ob_type != &PyBytes_Type)
@@ -19,13 +18,13 @@ void print_python_bytes(PyObject *p)
 	}
 
 	printf("  size: %zd\n", size);
-	printf("  trying string: %s\n", byteObject->ob_sval);
+	printf("  trying string: %s\n", ((PyBytesObject *)p)->ob_sval);
 
 	size = size < 9 ? size + 1 : 10;
 	printf("  first %zd bytes: ", size);
 	for (i = 0; i < size; i++)
 		printf("%.2x%c",
-			   byteObject->ob_sval[i], i + 1 == size ? '\n' : ' ');
+			   ((PyBytesObject *)p)->ob_sval[i], i + 1 == size ? '\n' : ' ');
 }
 
 /**
