@@ -11,7 +11,7 @@ void print_python_bytes(PyObject *p)
 	Py_ssize_t i = 0, size = (((PyVarObject *)(p))->ob_size);
 
 	printf("[.] bytes object info\n");
-	if (p->ob_type != &PyBytes_Type)
+	if (PyBytes_Check(p))
 	{
 		printf("    [ERROR] Invalid Bytes Object\n");
 		return;
@@ -43,7 +43,7 @@ void print_python_list(PyObject *p)
 
 	for (i = 0; i < size; i++)
 	{
-		element = PyList_GetItem(p, i);
+		element = ((PyListObject *)p)->ob_item[i];
 		printf("Element %zd: %s\n", i, (char *)(element->ob_type)->tp_name);
 	}
 }
