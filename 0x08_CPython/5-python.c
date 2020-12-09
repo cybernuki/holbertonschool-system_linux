@@ -20,7 +20,7 @@ void print_python_int(PyObject *p)
 
 	size = ((PyVarObject *)p)->ob_size;
 	size = size < 0 ? -size : size;
-	if (size == 3 && ((PyLongObject *)p)->ob_digit[2] > 0xf || size > 3)
+	if (size == 3 && (((PyLongObject *)p)->ob_digit[2] > 0xf || size > 3))
 	{
 		printf("C unsigned long int overflow\n");
 		return;
