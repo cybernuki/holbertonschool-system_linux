@@ -18,11 +18,11 @@ void print_python_bytes(PyObject *p)
 		return;
 	}
 
-	printf("    size: %zd\n", size);
-	printf("    trying string: %s\n", byteObject->ob_sval);
+	printf("  size: %zd\n", size);
+	printf("  trying string: %s\n", byteObject->ob_sval);
 
 	size = size < 9 ? size + 1 : 10;
-	printf("	first %zd bytes: ", size);
+	printf("  first %d bytes: ", size);
 	for (i = 0; i < size; i++)
 		printf("%.2x%c",
 			   byteObject->ob_sval[i], i + 1 == size ? '\n' : ' ');
