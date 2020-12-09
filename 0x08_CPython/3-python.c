@@ -16,7 +16,7 @@ void print_python_float(PyObject *p)
         return;
     }
 
-    printf("  value: %f.2\n", ((PyFloatObject *)p)->ob_fval);
+    printf("  value: %f.02\n", ((PyFloatObject *)p)->ob_fval);
 }
 
 /**
