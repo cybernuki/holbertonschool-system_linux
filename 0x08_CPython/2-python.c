@@ -11,7 +11,7 @@ void print_python_bytes(PyObject *p)
 	Py_ssize_t i = 0, size = (((PyVarObject *)(p))->ob_size);
 
 	printf("[.] bytes object info\n");
-	if (PyBytes_Check(p))
+	if (!PyBytes_Check(p))
 	{
 		printf("    [ERROR] Invalid Bytes Object\n");
 		return;
