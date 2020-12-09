@@ -9,7 +9,7 @@
 void print_python_int(PyObject *p)
 {
 	unsigned long number = 0;
-	ssize_t i = 0, size = 0;
+	ssize_t i = 0, size = 0, negative = 0;
 	int shift = 0;
 
 	if (!PyLong_Check(p))
@@ -19,7 +19,8 @@ void print_python_int(PyObject *p)
 	}
 
 	size = ((PyVarObject *)p)->ob_size;
-	size = size < 0 ? -size : size;
+	negative = size < 0;
+	size = negative ? -size : size;
 	if (size == 3 && (((PyLongObject *)p)->ob_digit[2] > 0xf || size > 3))
 	{
 		printf("C unsigned long int overflow\n");
@@ -32,7 +33,7 @@ void print_python_int(PyObject *p)
 			((unsigned long)((PyLongObject *)p)->ob_digit[i]) * (1UL << (shift));
 		number += sub;
 	}
-	if (size < 0)
+	if (negative)
 		printf("-");
 	printf("%lu\n", number);
 }
