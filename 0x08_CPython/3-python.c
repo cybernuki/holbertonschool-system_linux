@@ -58,14 +58,16 @@ void print_python_list(PyObject *p)
     PyObject *element;
 
     printf("[*] Python list info\n");
-    printf("[*] Size of the Python List = %zd\n", size);
-    printf("[*] Allocated = %zd\n", allocated);
 
     if (!PyList_Check(p))
     {
         printf("  [ERROR] Invalid List Object\n");
         return;
     }
+
+    printf("[*] Size of the Python List = %zd\n", size);
+    printf("[*] Allocated = %zd\n", allocated);
+
     for (i = 0; i < size; i++)
     {
         element = ((PyListObject *)p)->ob_item[i];
