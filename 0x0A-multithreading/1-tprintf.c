@@ -7,15 +7,15 @@
 */
 int tprintf(char const *format, ...)
 {
-    va_list args;
-    pthread_t thread;
+	va_list args;
+	pthread_t thread;
 
-    thread = pthread_self();
-    setbuf(stdout, NULL);
-    va_start(args, format);
-    printf("[%lu] ", thread);
-    vprintf(format, args);
-    va_end(args);
+	thread = pthread_self();
+	setbuf(stdout, NULL);
+	va_start(args, format);
+	printf("[%lu] ", thread);
+	vprintf(format, args);
+	va_end(args);
 
-    return (0);
+	return (0);
 }
