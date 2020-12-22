@@ -1,6 +1,6 @@
 #include "multithreading.h"
 
-pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 
 __attribute__((constructor)) void begin(void)
 {
