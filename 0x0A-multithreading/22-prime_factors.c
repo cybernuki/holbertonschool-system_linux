@@ -1,32 +1,27 @@
 #include "multithreading.h"
 
 /**
- * create_task - create task structure
- * @entry: is a pointer to the entry function of the task
- * @param: is the parameter that will later be passed to the entry function
- * Return: a pointer to the created task structure
+ * create_task - create a new task
+ * @entry: is the given entry function
+ * @param: is the param
+ * Return: a new Task or NULL on failure
  */
 task_t *create_task(task_entry_t entry, void *param)
 {
-	task_t *new_task = NULL;
+	task_t *task = NULL;
 
-	new_task = calloc(1, sizeof(task_t));
-	if (!new_task)
+	task = calloc(1, sizeof(*task));
+	if (!task)
 		return (NULL);
-
-	new_task->entry = entry;
-	new_task->param = param;
-	new_task->status = PENDING;
-	new_task->result = NULL;
-	/*	new_task->lock = PTHREAD_MUTEX_INITIALIZER;*/
-
-	return (new_task);
+	task->entry = entry;
+	task->param = param;
+	task->status = PENDING;
+	return (task);
 }
 
 /**
- * destroy_task - destroy task structure
- * @task:  pointer to the task to destroy
- * Return: Nothing
+ * destroy_task - destroy a task
+ * @task: is the given task
  */
 void destroy_task(task_t *task)
 {
@@ -39,35 +34,30 @@ void destroy_task(task_t *task)
 }
 
 /**
- * exec_tasks - run through the list of tasks and execute them
- * @tasks: pointer to the list of tasks to be executed
- * Return: return NULL as its return value will not be retrieved
+ * exec_tasks - execute tasks
+ * @tasks: given tasks
+ * Return: smenthing
  */
 void *exec_tasks(list_t const *tasks)
 {
-	node_t *node = NULL;
-	task_t *task = NULL;
+	node_t *index = tasks->head;
 	int i = 0;
+	task_t *task = NULL;
 
-	node = tasks->head;
-	while (node)
+	while (index)
 	{
-		task = (task_t *)node->content;
+		task = (task_t *)index->content;
 		if (task->status == PENDING)
 		{
 			task->status = STARTED;
 			tprintf("[%02d] Started\n", i);
-			task->result = (void *)((
-				(list_t * (*)(char const *)) task->entry)((char const *)task->param));
+			task->result = (void *)(((list_t * (*)(char const *)) task->entry)((char const *)task->param));
 			tprintf("[%02d] Success\n", i);
-			if (task->result == NULL)
-				task->status = FAILURE;
-			else
-				task->status = SUCCESS;
-		}
-		node = node->next;
-		i++;
-	}
 
-	return (NULL);
+			task->status = task->result ? SUCCESS : FAILURE;
+		}
+		i++;
+		index = index->next;
+	}
+	return NULL;
 }
