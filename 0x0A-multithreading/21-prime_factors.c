@@ -18,7 +18,7 @@ list_t *prime_factors(char const *s)
 		return (list);
 	list = list_init(list), n = strtoul(s, NULL, 10);
 
-	for (i = 2; n != 1; i += (i == 2) ? 1 : 2)
+	for (i = 2; (i * i) <= n; i += (i == 2) ? 1 : 2)
 	{
 
 		while (n % i == 0)
@@ -28,6 +28,13 @@ list_t *prime_factors(char const *s)
 			list_add(list, prime);
 			n /= i;
 		}
+	}
+
+	if (n != 1)
+	{
+		prime = calloc(1, sizeof(unsigned long));
+		*prime = n;
+		list_add(list, prime);
 	}
 
 	return (list);
