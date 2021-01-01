@@ -51,7 +51,8 @@ void *exec_tasks(list_t const *tasks)
 		{
 			task->status = STARTED;
 			tprintf("[%02d] Started\n", i);
-			task->result = (void *)(((list_t * (*)(char const *)) task->entry)((char const *)task->param));
+			task->result = (void *)((
+				(list_t * (*)(char const *)) task->entry)((char const *)task->param));
 			tprintf("[%02d] Success\n", i);
 
 			task->status = task->result ? SUCCESS : FAILURE;
@@ -59,5 +60,5 @@ void *exec_tasks(list_t const *tasks)
 		i++;
 		index = index->next;
 	}
-	return NULL;
+	return (NULL);
 }
