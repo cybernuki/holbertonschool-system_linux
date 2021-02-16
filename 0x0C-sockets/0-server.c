@@ -9,7 +9,7 @@
  * main - socket server
  * Return: SUCCESS or FAILURE
  */
-int main()
+int main(void)
 {
 	int sd;
 	struct sockaddr_in name;
